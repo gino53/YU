@@ -1,18 +1,41 @@
 /*=============== PREF ===============*/
 
-document.querySelector('button').addEventListener("click", function () {
-    document.querySelector(".active").classList.remove("active");
-    var name = document.getElementById("name").value;
-    localStorage.setItem("inputContent", name);
+document.getElementById('start').addEventListener('click', function () {
+    let hello_container = document.querySelector('.hello_container');
+
+    setTimeout(function () {
+        hello_container.classList.add('removing');
+    }, 2400);
+
+    setTimeout(function () {
+        hello_container.classList.add('delete');
+    }, 2500);
 });
 
-document.getElementById("delete").addEventListener("click", function () {
-    let div = document.getElementById("wrapper");
-    div.classList.add("removing");
-    setTimeout(function () {
-        document.getElementById("wrapper").remove();
-    }, 500);
+window.addEventListener("DOMContentLoaded", (event) => {
+    animate_text();
 });
+
+function animate_text() {
+    let delay = 300,
+        delay_start = 0,
+        contents,
+        letters;
+
+    document.querySelectorAll(".animate_text").forEach(function (elem) {
+        contents = elem.textContent.trim();
+        elem.textContent = "";
+        letters = contents.split("");
+        elem.style.visibility = 'visible';
+
+        letters.forEach(function (letter, index_1) {
+            setTimeout(function () {
+                elem.textContent += letter;
+            }, delay_start + delay * index_1);
+        });
+        delay_start += delay * letters.length;
+    });
+}
 
 /*=============== MOUSE ===============*/
 
@@ -23,13 +46,13 @@ $(document).mousemove(function (event) {
     var mouseXpercentage = Math.round((event.pageX / windowWidth) * 100);
     var mouseYpercentage = Math.round((event.pageY / windowHeight) * 100);
 
-    $("#app").css(
-        "background",
-        "radial-gradient(at " +
+    $('#app').css(
+        'background',
+        'radial-gradient(at ' +
         mouseXpercentage +
-        "% " +
+        '% ' +
         mouseYpercentage +
-        "%, #3498db, #9b59b6)"
+        '%, #3498db, #9b59b6)'
     );
 });
 
@@ -84,8 +107,7 @@ function chatStripe(isAi, value, uniqueId) {
         <div class="wrapper ${isAi && 'ai'}" id="wrapper">
             <div class="chat">
                 <div class="profile">
-                  <lord-icon src="${isAi ? "https://cdn.lordicon.com/wrprwmwt.json" : "https://cdn.lordicon.com/dxjqoygy.json"}" trigger="loop" delay="${isAi ? 0 : 5000}" colors="primary:#121331,secondary:#000000"></lord-icon>
-                  ${isAi ? '' : '<h3 id="user_name">hi</h3>'}
+                  <lord-icon src="${isAi ? "https://cdn.lordicon.com/wrprwmwt.json" : "https://cdn.lordicon.com/dxjqoygy.json"}" trigger="loop" delay="${isAi ? 0 : 5000}" style="width:36px;height:36px" colors="primary:#121331,secondary:#000000"></lord-icon>
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
             </div>
@@ -107,7 +129,7 @@ const handleSubmit = async (e) => {
 
     // bot's chatstripe
     const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+    chatContainer.innerHTML += chatStripe(true, ' ', uniqueId)
 
     // to focus scroll to the bottom 
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -129,7 +151,7 @@ const handleSubmit = async (e) => {
     })
 
     clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
+    messageDiv.innerHTML = ' '
 
     if (response.ok) {
         const data = await response.json();
@@ -139,7 +161,7 @@ const handleSubmit = async (e) => {
     } else {
         const err = await response.text()
 
-        messageDiv.innerHTML = "Something went wrong"
+        messageDiv.innerHTML = 'Something went wrong'
         alert(err)
     }
 }
@@ -149,4 +171,26 @@ form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e)
     }
+});
+
+/*=============== DELETE CHAT IA ===============*/
+
+document.getElementById('delete').addEventListener('click', function () {
+    let wrapper = document.getElementsByClassName('wrapper');
+
+    for (let i = 0; i < wrapper.length; i++) {
+        wrapper[i].classList.add('removing');
+    }
+
+    setTimeout(function () {
+        for (let i = 0; i < wrapper.length; i++) {
+            wrapper[i].remove();
+        }
+    }, 500);
+
+    setTimeout(function () {
+        for (let i = 0; i < wrapper.length; i++) {
+            wrapper[i].classList.add('delete');
+        }
+    }, 1000);
 });

@@ -5,40 +5,190 @@
   font-family: "MuseoModerno", cursive;
 }
 
-.pref_container.active {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.148);
+.hello_container.removing {
+  opacity: 0;
 }
 
-.pref_container {
+.hello_container.removing.delete {
   display: none;
 }
 
-.pref {
+.hello_container {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.287);
+  opacity: 1;
+  transition: opacity 0.5s;
+  z-index: 1;
+}
+
+.hello {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 420px;
+  height: 500px;
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.hello::before,
+.hello::after {
+  content: '';
+  position: absolute;
+  border-radius: 1.5rem;
+  background-color: #ff0058;
+  box-shadow: 0 300px 400px -100px #ffbc00 inset;
+  transition: width 1s, height 1s, border-radius 1s, background-color 1s, box-shadow 2s, transform 2s, z-index 1.5s;
+}
+
+.hello::before {
+  top: 140px;
+  left: 170px;
+  width: 40%;
+  height: 100%;
+  transform: skewX(-35deg);
+  z-index: 1;
+}
+
+.hello::after {
+  top: -45px;
+  left: 0;
+  width: 40%;
+  height: 90%;
+  transform: skewX(35deg);
+}
+
+.hello:hover::before,
+.hello:hover::after {
+  width: 30%;
+  height: 40%;
   border-radius: 2rem;
-  background-color: #85a1ec;
+  background-color: rgba(255, 255, 255, 0.148);
+  box-shadow: none;
+}
+
+.hello:hover::before {
+  transform: skewX(0deg) scaleX(1.3) translateY(230px) translateX(140px);
+  z-index: 2;
+}
+
+.hello:hover::after {
+  transform: skewX(0deg) scaleX(1.3) translateY(-20px) translateX(-40px);
+}
+
+.hello_content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  z-index: 1;
+}
+
+#start {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.9em 1.6em;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  color: #FFF;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: inherit;
+  z-index: 0;
+}
+
+#start::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 10px;
+  background: linear-gradient(45deg, #FF0000, #002BFF, #FF00C8, #002BFF, #FF0000, #002BFF, #FF00C8, #002BFF);
+  background-size: 600%;
+  filter: blur(8px);
+  opacity: 0;
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  z-index: -1;
+}
+
+#start::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: rgb(46, 46, 46);
+  z-index: -1;
+}
+
+#start svg {
+  margin-right: 3px;
+  transform: rotate(30deg);
+}
+
+#start:hover::before {
+  opacity: 1;
+}
+
+#start:focus svg {
+  animation: launch both 2s;
+}
+
+@keyframes launch {
+  from {
+    transform: rotate(30deg);
+  }
+
+  to {
+    transform: translateX(15px) translateY(-25px) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
 }
 
 #app {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(to right bottom, #958cf8, #8e92f7, #8998f4, #869df1, #85a2ed, #85a1ec, #86a1ec, #86a0eb, #8999ed, #8f91ee, #9789ed, #a07feb);
@@ -46,11 +196,11 @@
 
 #chat_container {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  gap: 1rem;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+  gap: 1rem;
   padding: 1.25rem;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -67,33 +217,37 @@
   padding: 1rem;
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.148);
-	box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-	-moz-backdrop-filter: blur(10px);
-  transition: opacity 0.5s;
+  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -moz-backdrop-filter: blur(10px);
   opacity: 1;
+  transition: opacity 0.5s;
 }
 
 .wrapper.removing {
   opacity: 0;
 }
 
+.wrapper.removing.delete {
+  display: none;
+}
+
 .ai {
   background-color: rgba(0, 0, 0, 0.148);
-	box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-	-moz-backdrop-filter: blur(10px);
+  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -moz-backdrop-filter: blur(10px);
 }
 
 .chat {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.625rem;
+  flex-direction: row;
   width: 100%;
   max-width: 1280px;
+  gap: 0.625rem;
 }
 
 .profile {
@@ -116,7 +270,7 @@
   overflow-x: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
   color: #dcdcdc;
   font-size: 1.25em;
 }
@@ -128,17 +282,17 @@
 form {
   display: flex;
   flex-direction: row;
-  gap: 0.625rem;
   width: 100%;
   max-width: 1280px;
+  gap: 0.625rem;
   margin: 0 auto;
   padding: 0.625rem;
   border-radius: 0.75rem;
   background-color: rgba(0, 0, 0, 0.148);
-	box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
-	-moz-backdrop-filter: blur(10px);
+  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -moz-backdrop-filter: blur(10px);
 }
 
 textarea {
@@ -152,8 +306,8 @@ textarea {
 }
 
 button {
-  outline: 0;
   border: 0;
+  outline: 0;
   cursor: pointer;
   background: transparent;
 }
