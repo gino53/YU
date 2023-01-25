@@ -14,30 +14,28 @@
 </head>
 
 <body>
-  <div class="hello_container">
-    <div class="hello">
-      <div class="hello_content">
+  <div class="enabled" id="launch_container">
+    <div id="launch_Y">
+      <div id="launch_content">
         <h1 class="animate_text">Hello, I'm YU</h1>
-        <button id="start">
-          <img src="assets/images/rocket_icon.png" alt="" id="rocket_icon">
-          <span id="start_text">Launch</span>
+        <button id="launch_button">
+          <img src="assets/images/rocket_icon.png" alt="" id="launch_icon">
+          <span id="launch_text">Launch</span>
         </button>
       </div>
     </div>
   </div>
   <div id="app">
-    <div id="chat_container"></div>
-    <div class="disabled" id="delete_container">
+    <header class="disabled">
       <button id="delete_button"><img src="assets/images/delete_icon.png" alt=""></button>
-    </div>
+      <h1>YU</h1>
+      <span id="time"></span>
+    </header>
+    <div id="chat_container"></div>
     <form class="disabled">
       <textarea name="prompt" rows="1" cols="1" placeholder="Ask YU..."></textarea>
-      <button type="submit" class="send">
-        <div class="svg-wrapper-1">
-          <div class="svg-wrapper">
-            <img src="assets/images/send_icon.png" alt="" id="send_icon">
-          </div>
-        </div>
+      <button type="submit" id="send_button">
+        <img src="assets/images/send_icon.png" alt="" id="send_icon">
         <span id="send_text">Send</span>
       </button>
     </form>

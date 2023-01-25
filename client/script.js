@@ -1,59 +1,4 @@
-/*=============== PREF ===============*/
-
-document.getElementById('start').addEventListener('click', function () {
-    let hello_container = document.querySelector('.hello_container');
-    let form = document.querySelector('form');
-    let delete_button = document.getElementById('delete_container');
-
-    setTimeout(function () {
-        hello_container.classList.add('removing');
-    }, 2200);
-
-    setTimeout(function () {
-        hello_container.remove();
-    }, 2700);
-
-    setTimeout(function () {
-        hello_container.classList.add('delete');
-    }, 3000);
-
-    setTimeout(function () {
-        form.classList.remove('disabled');
-        delete_button.classList.remove('disabled')
-    }, 2700);
-
-    setTimeout(function () {
-        form.classList.add('enabled');
-        delete_button.classList.add('enabled');
-    }, 2800);
-});
-
-window.addEventListener("DOMContentLoaded", (event) => {
-    animate_text();
-});
-
-function animate_text() {
-    let delay = 300,
-        delay_start = 0,
-        contents,
-        letters;
-
-    document.querySelectorAll(".animate_text").forEach(function (elem) {
-        contents = elem.textContent.trim();
-        elem.textContent = "";
-        letters = contents.split("");
-        elem.style.visibility = 'visible';
-
-        letters.forEach(function (letter, index_1) {
-            setTimeout(function () {
-                elem.textContent += letter;
-            }, delay_start + delay * index_1);
-        });
-        delay_start += delay * letters.length;
-    });
-}
-
-/*=============== MOUSE ===============*/
+/*=============== MOUSE MOVE ===============*/
 
 $(document).mousemove(function (event) {
     var windowWidth = $(window).width();
@@ -72,89 +17,165 @@ $(document).mousemove(function (event) {
     );
 });
 
+/*=============== ANIMATE TEXT ===============*/
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    animate_text();
+});
+
+function animate_text() {
+    let delay = 300,
+        delay_start = 0,
+        contents,
+        letters;
+
+    document.querySelectorAll('.animate_text').forEach(function (elem) {
+        contents = elem.textContent.trim();
+        elem.textContent = '';
+        letters = contents.split('');
+        elem.style.visibility = 'visible';
+
+        letters.forEach(function (letter, index_1) {
+            setTimeout(function () {
+                elem.textContent += letter;
+            }, delay_start + delay * index_1);
+        });
+        delay_start += delay * letters.length;
+    });
+};
+
+/*=============== ENABLED DISABLED ===============*/
+
+document.getElementById('launch_button').addEventListener('click', function () {
+    let hello_container = document.getElementById('launch_container');
+    let form = document.querySelector('form');
+    let header = document.querySelector('header');
+
+    setTimeout(function () {
+        hello_container.classList.remove('enabled');
+    }, 2200);
+
+    setTimeout(function () {
+        hello_container.classList.add('disabled');
+    }, 3000);
+
+    setTimeout(function () {
+        form.classList.remove('disabled');
+        header.classList.remove('disabled');
+    }, 2700);
+
+    setTimeout(function () {
+        form.classList.add('enabled');
+        header.classList.add('enabled');
+    }, 2800);
+});
+
+/*=============== DELETE MESSAGES ===============*/
+
+document.getElementById('delete_button').addEventListener('click', function () {
+    let message = document.getElementsByClassName('message_container');
+
+    for (let i = 0; i < message.length; i++) {
+        message[i].classList.remove('enabled');
+    };
+
+    setTimeout(function () {
+        for (let i = 0; i < message.length; i++) {
+            message[i].classList.add('disabled');
+        };
+    }, 1000);
+});
+
+/*=============== TIME ===============*/
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    m = checkTime(m);
+    document.getElementById('time').textContent = h + ":" + m;
+    var t = setTimeout(startTime, 500);
+};
+
+function checkTime(i) {
+    if (i < 10) { i = "0" + i };
+    return i;
+};
+
+startTime();
+
 /*=============== CHAT IA ===============*/
 
-const form = document.querySelector('form')
-const chatContainer = document.querySelector('#chat_container')
+const form = document.querySelector('form');
+const chatContainer = document.querySelector('#chat_container');
 
-let loadInterval
+let loadInterval;
 
 function loader(element) {
-    element.textContent = ''
+    element.textContent = '';
 
     loadInterval = setInterval(() => {
-        // Update the text content of the loading indicator
         element.textContent += '.';
 
-        // If the loading indicator has reached three dots, reset it
         if (element.textContent === '....') {
             element.textContent = '';
         }
     }, 300);
-}
+};
 
 function typeText(element, text) {
-    let index = 0
+    let index = 0;
 
     let interval = setInterval(() => {
         if (index < text.length) {
-            element.innerHTML += text.charAt(index)
-            index++
+            element.innerHTML += text.charAt(index);
+            index++;
         } else {
-            clearInterval(interval)
+            clearInterval(interval);
         }
-    }, 20)
-}
+    }, 20);
+};
 
-// generate unique ID for each message div of bot
-// necessary for typing text effect for that specific reply
-// without unique ID, typing text will work on every element
 function generateUniqueId() {
     const timestamp = Date.now();
     const randomNumber = Math.random();
     const hexadecimalString = randomNumber.toString(16);
 
     return `id-${timestamp}-${hexadecimalString}`;
-}
+};
 
 function chatStripe(isAi, value, uniqueId) {
     return (
         `
-        <div class="wrapper ${isAi && 'ai'}" id="wrapper">
-            <div class="chat">
-                <div class="profile">
-                <img src="${isAi ? 'assets/images/ai_icon.png' : 'assets/images/user_icon.png'}" id="${isAi ? 'ai_icon' : 'user_icon' }"">
-                </div>
+        <div class="message_container ${isAi && 'ai'} enabled">
+            <div id="message_content">
+                <span id="profile">
+                    <img src="${isAi ? 'assets/images/ai_icon.png' : 'assets/images/user_icon.png'}" id="${isAi ? 'ai_icon' : 'user_icon'}"">
+                </span>
                 <div class="message" id=${uniqueId}>${value}</div>
             </div>
         </div>
     `
-    )
-}
+    );
+};
 
-const handleSubmit = async (e) => {
-    e.preventDefault()
+async function handleSubmit(e) {
+    e.preventDefault();
 
-    const data = new FormData(form)
+    const data = new FormData(form);
 
-    // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+    chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
 
-    // to clear the textarea input 
-    form.reset()
+    form.reset();
 
-    // bot's chatstripe
-    const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, ' ', uniqueId)
+    const uniqueId = generateUniqueId();
+    chatContainer.innerHTML += chatStripe(true, ' ', uniqueId);
 
-    // to focus scroll to the bottom 
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    // specific message div 
-    const messageDiv = document.getElementById(uniqueId)
+    const messageDiv = document.getElementById(uniqueId);
 
-    // messageDiv.innerHTML = "..."
-    loader(messageDiv)
+    loader(messageDiv);
 
     const response = await fetch('http://localhost:5000', {
         method: 'POST',
@@ -164,49 +185,24 @@ const handleSubmit = async (e) => {
         body: JSON.stringify({
             prompt: data.get('prompt')
         })
-    })
+    });
 
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = ' '
+    clearInterval(loadInterval);
+    messageDiv.innerHTML = ' ';
 
     if (response.ok) {
         const data = await response.json();
-        const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
+        const parsedData = data.bot.trim();
 
-        typeText(messageDiv, parsedData)
+        typeText(messageDiv, parsedData);
     } else {
-        const err = await response.text()
+        messageDiv.innerHTML = 'Something went wrong';
+    };
+};
 
-        messageDiv.innerHTML = 'Something went wrong'
-        alert(err)
-    }
-}
-
-form.addEventListener('submit', handleSubmit)
+form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
-        handleSubmit(e)
-    }
-});
-
-/*=============== DELETE CHAT IA ===============*/
-
-document.getElementById('delete_button').addEventListener('click', function () {
-    let wrapper = document.getElementsByClassName('wrapper');
-
-    for (let i = 0; i < wrapper.length; i++) {
-        wrapper[i].classList.add('removing');
-    }
-
-    setTimeout(function () {
-        for (let i = 0; i < wrapper.length; i++) {
-            wrapper[i].remove();
-        }
-    }, 500);
-
-    setTimeout(function () {
-        for (let i = 0; i < wrapper.length; i++) {
-            wrapper[i].classList.add('delete');
-        }
-    }, 1000);
+        handleSubmit(e);
+    };
 });
