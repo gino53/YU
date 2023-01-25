@@ -1,9 +1,13 @@
+/*=============== GENERAL ===============*/
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "MuseoModerno", cursive;
 }
+
+/*=============== HELLO ===============*/
 
 .hello_container.removing {
   opacity: 0;
@@ -25,7 +29,7 @@
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.287);
   opacity: 1;
-  transition: opacity 0.5s;
+  transition: opacity 1s;
   z-index: 1;
 }
 
@@ -47,7 +51,7 @@
   border-radius: 1.5rem;
   background-color: #ff0058;
   box-shadow: 0 300px 400px -100px #ffbc00 inset;
-  transition: width 1s, height 1s, border-radius 1s, background-color 1s, box-shadow 2s, transform 2s, z-index 1.5s;
+  transition: width 1s, height 1s, border-radius 1s, background-color 2s, box-shadow 2s, transform 2s, z-index 2.5s;
 }
 
 .hello::before {
@@ -101,6 +105,8 @@
   z-index: 1;
 }
 
+/*=============== PREF ===============*/
+
 #start {
   position: relative;
   display: flex;
@@ -117,7 +123,7 @@
   z-index: 0;
 }
 
-#start::before {
+ .profile::before, #delete_button::before {
   content: '';
   position: absolute;
   top: -2px;
@@ -134,7 +140,7 @@
   z-index: -1;
 }
 
-#start::after {
+ .profile::after, #delete_button::after {
   content: "";
   position: absolute;
   left: 0;
@@ -146,26 +152,26 @@
   z-index: -1;
 }
 
-#start svg {
+#start #rocket_icon {
   margin-right: 3px;
-  transform: rotate(30deg);
 }
 
-#start:hover::before {
+.profile:hover::before, #delete_button:hover::before {
   opacity: 1;
 }
 
-#start:focus svg {
+#start:focus #rocket_icon {
   animation: launch both 2s;
 }
 
-@keyframes launch {
-  from {
-    transform: rotate(30deg);
-  }
+#start:focus #start_text {
+  transform: translateX(-15px);
+  transition: 2s;
+}
 
+@keyframes launch {
   to {
-    transform: translateX(15px) translateY(-25px) rotate(30deg);
+    transform: translateX(15px) translateY(-25px);
     opacity: 0;
   }
 }
@@ -257,11 +263,21 @@
   width: 42px;
   height: 42px;
   border-radius: 0.625rem;
-  background-color: #F2DDA4;
+  background-color: #131312;
+  position: relative;;
+  z-index: 0;
 }
 
-.ai .profile {
-  background-color: #BFD7B5;
+#delete_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 0.625rem;
+  background-color: #131312;
+  position: relative;;
+  z-index: 0;
 }
 
 .message {
@@ -279,6 +295,18 @@
   display: none;
 }
 
+form.disabled, #delete_container.disabled {
+  display: none;
+}
+
+#delete_container {
+  position: absolute;
+  bottom: 80px;
+  left: 0px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 form {
   display: flex;
   flex-direction: row;
@@ -293,6 +321,12 @@ form {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   -moz-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+form.enabled, #delete_container.enabled {
+  opacity: 1;
 }
 
 textarea {
@@ -303,6 +337,11 @@ textarea {
   background: transparent;
   color: #fff;
   font-size: 1.125em;
+  resize: none;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
 }
 
 button {
@@ -318,4 +357,62 @@ button {
     border-radius: 0;
   }
 
+}
+
+.send {
+  font-family: inherit;
+  font-size: 20px;
+  color: #dcdcdc;
+  padding-right: 1.5em;
+  padding-left: 0.7em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.send #send_text {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.5s ease-in-out;
+}
+
+.send #send_icon {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.send:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.send:hover #send_icon {
+  transform: translateX(40px) scale(1.1) rotate(-30deg);
+}
+
+.send:hover #send_text {
+  transform: translateX(5em);
+}
+
+.send:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+#rocket_icon,
+#send_icon,
+#user_icon {
+  margin-top: 6px;
 }

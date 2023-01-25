@@ -2,14 +2,30 @@
 
 document.getElementById('start').addEventListener('click', function () {
     let hello_container = document.querySelector('.hello_container');
+    let form = document.querySelector('form');
+    let delete_button = document.getElementById('delete_container');
 
     setTimeout(function () {
         hello_container.classList.add('removing');
-    }, 2400);
+    }, 2200);
+
+    setTimeout(function () {
+        hello_container.remove();
+    }, 2700);
 
     setTimeout(function () {
         hello_container.classList.add('delete');
-    }, 2500);
+    }, 3000);
+
+    setTimeout(function () {
+        form.classList.remove('disabled');
+        delete_button.classList.remove('disabled')
+    }, 2700);
+
+    setTimeout(function () {
+        form.classList.add('enabled');
+        delete_button.classList.add('enabled');
+    }, 2800);
 });
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -107,7 +123,7 @@ function chatStripe(isAi, value, uniqueId) {
         <div class="wrapper ${isAi && 'ai'}" id="wrapper">
             <div class="chat">
                 <div class="profile">
-                  <lord-icon src="${isAi ? "https://cdn.lordicon.com/wrprwmwt.json" : "https://cdn.lordicon.com/dxjqoygy.json"}" trigger="loop" delay="${isAi ? 0 : 5000}" style="width:36px;height:36px" colors="primary:#121331,secondary:#000000"></lord-icon>
+                <img src="${isAi ? 'assets/images/ai_icon.png' : 'assets/images/user_icon.png'}" id="${isAi ? 'ai_icon' : 'user_icon' }"">
                 </div>
                 <div class="message" id=${uniqueId}>${value}</div>
             </div>
@@ -175,7 +191,7 @@ form.addEventListener('keyup', (e) => {
 
 /*=============== DELETE CHAT IA ===============*/
 
-document.getElementById('delete').addEventListener('click', function () {
+document.getElementById('delete_button').addEventListener('click', function () {
     let wrapper = document.getElementsByClassName('wrapper');
 
     for (let i = 0; i < wrapper.length; i++) {
