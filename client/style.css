@@ -24,7 +24,6 @@
 
 ::selection {
   background-color: var(--second-bg-color);
-  color: var(--third-color);
 }
 
 /*=============== ENABLED DISABLED ===============*/
@@ -278,11 +277,13 @@ header {
   -webkit-backdrop-filter: var(--main-backdrop-filter);
   -moz-backdrop-filter: --main-backdrop-filter;
   opacity: 0;
+  color: var(--third-color);
   transition: opacity 0.5s;
 }
 
 .message_container.ai {
   background-color: var(--main-bg-color);
+  color: var(--main-color);
 }
 
 #message_content {
@@ -347,7 +348,6 @@ header {
   -ms-overflow-style: none;
   scrollbar-width: none;
   white-space: pre-wrap;
-  color: var(--main-color);
   font-size: 1.25em;
   user-select: text;
 }
