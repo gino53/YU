@@ -1,12 +1,30 @@
+/*=============== VARIABLES ===============*/
+
+:root {
+  --main-bg-color: rgba(0, 0, 0, 0.314);
+  --second-bg-color: rgba(255, 255, 255, 0.148);
+  --main-color: #dcdcdc;
+  --second-color: #fff;
+  --third-color: #131312;
+  --main-box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
+  --main-backdrop-filter: blur(10px);
+}
+
 /*=============== GENERAL ===============*/
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
   outline: 0;
-  box-sizing: border-box;
   font-family: "MuseoModerno", cursive;
+  user-select: none;
+}
+
+::selection {
+  background-color: var(--second-bg-color);
+  color: var(--third-color);
 }
 
 /*=============== ENABLED DISABLED ===============*/
@@ -38,8 +56,8 @@
 /*=============== BUTTON ===============*/
 
 button {
-  cursor: pointer;
   background: transparent;
+  cursor: pointer;
 }
 
 #launch_button {
@@ -47,7 +65,7 @@ button {
   display: flex;
   align-items: center;
   margin-top: 1rem;
-  color: #fff;
+  color: var(--second-color);
   font-size: 1.125em;
   font-weight: 600;
 }
@@ -72,7 +90,7 @@ button {
   padding-right: 1.5rem;
   padding-left: 0.75rem;
   overflow: hidden;
-  color: #dcdcdc;
+  color: var(--main-color);
   font-size: 1.25em;
 }
 
@@ -95,7 +113,7 @@ button {
 }
 
 #send_button:hover #send_text {
-  transform: translateX(5em);
+  transform: translateX(5rem);
 }
 
 /*=============== LAUNCH ===============*/
@@ -110,7 +128,7 @@ button {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.287);
+  background-color: var(--main-bg-color);
   opacity: 0;
   transition: opacity 1s;
   z-index: 1;
@@ -156,7 +174,7 @@ button {
   width: 30%;
   height: 40%;
   border-radius: 2rem;
-  background-color: rgba(255, 255, 255, 0.148);
+  background-color: var(--main-bg-color);
   box-shadow: none;
 }
 
@@ -178,10 +196,10 @@ button {
   width: 100%;
   height: 100%;
   border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  color: #fff;
+  background: var(--main-bg-color);
+  box-shadow: var(--main-box-shadow);
+  backdrop-filter: var(--main-backdrop-filter);
+  color: var(--second-color);
   z-index: 1;
 }
 
@@ -189,8 +207,6 @@ button {
 
 #app {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
@@ -210,14 +226,22 @@ header {
   margin: 0 auto;
   padding: 0.625rem;
   border-radius: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.338);
-  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  -moz-backdrop-filter: blur(10px);
+  background-color: var(--main-bg-color);
+  box-shadow: var(--main-box-shadow);
+  backdrop-filter: var(--main-backdrop-filter);
+  -webkit-backdrop-filter: var(--main-backdrop-filter);
+  -moz-backdrop-filter: var(--main-backdrop-filter);
   opacity: 0;
-  color: #dcdcdc;
+  color: var(--main-color);
   transition: opacity 1s;
+}
+
+#delete_button {
+  color: var(--main-color);
+}
+
+#time {
+  font-size: larger;
 }
 
 /*=============== CHAT ===============*/
@@ -248,17 +272,17 @@ header {
   max-width: 1280px;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: rgba(255, 255, 255, 0.148);
-  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  -moz-backdrop-filter: blur(10px);
+  background-color: var(--second-bg-color);
+  box-shadow: var(--main-box-shadow);
+  backdrop-filter: var(--main-backdrop-filter);
+  -webkit-backdrop-filter: var(--main-backdrop-filter);
+  -moz-backdrop-filter: --main-backdrop-filter;
   opacity: 0;
   transition: opacity 0.5s;
 }
 
 .message_container.ai {
-  background-color: rgba(0, 0, 0, 0.148);
+  background-color: var(--main-bg-color);
 }
 
 #message_content {
@@ -271,14 +295,15 @@ header {
 }
 
 #profile {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 42px;
   height: 42px;
   border-radius: 0.625rem;
-  background-color: #131312;
-  position: relative;
+  background-color: var(--third-color);
+  color: var(--second-color);
   z-index: 0;
 }
 
@@ -304,7 +329,7 @@ header {
 }
 
 #profile::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -322,8 +347,9 @@ header {
   -ms-overflow-style: none;
   scrollbar-width: none;
   white-space: pre-wrap;
-  color: #dcdcdc;
+  color: var(--main-color);
   font-size: 1.25em;
+  user-select: text;
 }
 
 .message::-webkit-scrollbar {
@@ -341,20 +367,21 @@ form {
   margin: 0 auto;
   padding: 0.625rem;
   border-radius: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.338);
-  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  -moz-backdrop-filter: blur(10px);
+  background-color: var(--main-bg-color);
+  box-shadow: var(--main-box-shadow);
+  backdrop-filter: var(--main-backdrop-filter);
+  -webkit-backdrop-filter: var(--main-backdrop-filter);
+  -moz-backdrop-filter: --main-backdrop-filter;
   opacity: 0;
   transition: opacity 1s;
 }
 
 textarea {
   width: 100%;
+  max-height: 300px;
   padding: 0.625rem;
   background: transparent;
-  color: #fff;
+  color: var(--second-color);
   font-size: 1.125em;
   resize: none;
 }
@@ -367,8 +394,8 @@ textarea::-webkit-scrollbar {
 
 @keyframes launch {
   to {
-    transform: translateX(15px) translateY(-25px);
     opacity: 0;
+    transform: translateX(5px) translateY(-25px);
   }
 }
 
@@ -388,11 +415,11 @@ textarea::-webkit-scrollbar {
 
 @keyframes fly-1 {
   from {
-    transform: translateY(0.1em);
+    transform: translateY(0.1rem);
   }
 
   to {
-    transform: translateY(-0.1em);
+    transform: translateY(-0.1rem);
   }
 }
 

@@ -150,7 +150,7 @@ function chatStripe(isAi, value, uniqueId) {
         <div class="message_container ${isAi && 'ai'} enabled">
             <div id="message_content">
                 <span id="profile">
-                    <img src="${isAi ? 'assets/images/ai_icon.png' : 'assets/images/user_icon.png'}" id="${isAi ? 'ai_icon' : 'user_icon'}"">
+                    <img src="${isAi ? 'assets/images/ai_icon.png' : 'assets/images/user_icon.png'}" alt="${isAi ? 'ai icon' : 'user icon'}" id="${isAi ? 'ai_icon' : 'user_icon'}">
                 </span>
                 <div class="message" id=${uniqueId}>${value}</div>
             </div>
@@ -205,4 +205,18 @@ form.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
         handleSubmit(e);
     };
+});
+
+/*=============== TEXTAREA HEIGHT ===============*/
+
+$(document).ready(function () {
+    $('textarea').on('input', function () {
+        if (this.value === '') {
+            this.style.height = '';
+        } else {
+            this.style.height = 'auto';
+            var height = (this.scrollHeight > 300) ? 300 : this.scrollHeight;
+            this.style.height = height + 'px';
+        }
+    });
 });
